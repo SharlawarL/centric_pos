@@ -435,6 +435,14 @@
           </a>
         </li>
         <?php } ?>
+        <?php if($this->user_model->has_module_permission("ledger")){ ?>
+        <li class="treeview <?php if($this->uri->segment(1)=='pnl'){ echo 'active'; } ?>">
+          <a href="<?php echo base_url('pnl');?>">
+            <i class="fa fa-cube text-blue"></i>
+            <span>P&L</span>
+          </a>
+        </li>
+        <?php } ?>
         <?php if($this->user_model->has_module_permission("purchase") || $this->user_model->has_module_permission("purchase_return")){ ?>
         <li class="treeview <?php if($this->uri->segment(1)=='purchase' || $this->uri->segment(1)=='purchase_return'){ echo 'active'; } ?>">
           <a href="#">

@@ -167,10 +167,10 @@
 			<th style="text-align: center;font-size: 12px;">Disc(%)</th>
 			
 			<th style="text-align: center;font-size: 12px;" colspan="2">Taxable Value</th>
-			<th style="text-align: center;font-size: 12px;">SGST</th>
+			<!-- <th style="text-align: center;font-size: 12px;">SGST</th>
 			<th style="text-align: center;font-size: 12px;">CGST</th>
-			<th style="text-align: center;font-size: 12px;">IGST</th>
-			<th style="text-align: center;font-size: 12px;"  colspan="2">Subtotal</th>
+			<th style="text-align: center;font-size: 12px;">IGST</th> -->
+			<th style="text-align: center;font-size: 12px;"  colspan="5">Subtotal</th>
 		</tr>
 			<?php 
 				$i = 1;$tot = 0;$q=0;$igst=0; $cgst=0; $sgst=0;
@@ -214,10 +214,10 @@
 					?>
 					
 				</td>
-				<td align="right" class="fontS"><?php echo $value->igst_tax;?></td>
+				<!-- <td align="right" class="fontS"><?php echo $value->igst_tax;?></td>
 				<td align="right" class="fontS"><?php echo $value->cgst_tax;?></td>
-				<td align="right" class="fontS"><?php echo $value->sgst_tax;?></td>
-				<td align="right" class="fontS"  colspan="2">
+				<td align="right" class="fontS"><?php echo $value->sgst_tax;?></td> -->
+				<td align="right" class="fontS"  colspan="8">
 					<?php 
 
 						if($value->tax_type == "Inclusive")
@@ -268,7 +268,7 @@
 						echo $data[0]->total-$data[0]->tax_value;
 					?>	
 				</td>
-				<td align="right" class="fontS">
+				<!-- <td align="right" class="fontS">
 					<?php echo $igst;?>	
 				</td>
 				<td align="right" class="fontS">
@@ -276,8 +276,8 @@
 				</td>
 				<td align="right" class="fontS">
 					<?php echo $sgst;?>
-				</td>
-				<td align="right" class="fontS"  colspan="2"> 
+				</td> -->
+				<td align="right" class="fontS"  colspan="5"> 
 					<?php
 						echo $data[0]->total;
 					?>		
@@ -291,7 +291,7 @@
 				<td colspan="12" align="right" class="footerpad fontH"><b>Total item wise Discount</td>
 				<td align="right" colspan="2" class="fontH"><?php echo round($data[0]->discount_value); ?></td>
 			</tr>
-			<tr>
+			<!-- <tr>
 				<td colspan="12" align="right" class="footerpad fontH"><b>IGST</td>
 				<td align="right" colspan="2" class="fontH">
 					<?php echo $igst;?>	
@@ -308,7 +308,7 @@
 				<td align="right" colspan="2" class="fontH">
 					<?php echo $sgst;?>	
 				</td>
-			</tr>
+			</tr> -->
 			<tr>
 				<td colspan="12" align="right" class="footerpad fontH"><b>General Discount</td>
 				<td align="right" colspan="2" class="fontH"><?php echo round($data[0]->flat_discount); ?></td>
@@ -350,7 +350,7 @@
         <tr>
         	<td colspan="14" valign="top" style="height: 60px;border-bottom: 0px;font-size: 13px;">
         		Paid Amount (in Words)<br>
-        		<b> INR <?php echo $this->numbertowords->convert_number($data[0]->total-$data[0]->flat_discount); ?> Only</b>
+        		<b> RM <?php echo $this->numbertowords->convert_number($data[0]->total-$data[0]->flat_discount); ?> Only</b>
         	</td>
         </tr>
         <tr>

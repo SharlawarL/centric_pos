@@ -43,9 +43,9 @@ $this->load->view('layout/header');
                   <th>Ledger Name</th>
                   <th>Group</th>
                   <th>Opening Balance</th>
-                  <th>Opening Date</th>
-                  <th>End Date</th>
-                  <th>Closing Balance</th>
+                  <!-- <th>Opening Date</th>
+                  <th>End Date</th> -->
+                  <th>RM</th>
                   <th>Actions</th>
                 </tr>
                 </thead>
@@ -58,10 +58,10 @@ $this->load->view('layout/header');
                     <td></td>
                     <td><?php echo $row->title; ?></td>
                     <td><?php echo $row->group_title; ?></td>
-                    <td><?php echo $row->opening_balance; ?></td>
-                    <td><?php echo $row->opening_date; ?></td>
-                    <td><?php echo $row->end_date; ?></td>
-                    <td><?php echo $row->closing_balance; ?></td>
+                    <td><?php echo $row->opening_balance == 0? null : $row->opening_balance;?></td>
+                    <!-- <td><?php echo $row->opening_date; ?></td>
+                    <td><?php echo $row->end_date; ?></td> -->
+                    <td><?php echo $row->closing_balance == 0? null : $row->closing_balance; ?></td>
                     <td>
                         <!-- <a href="" title="View Details" class="btn btn-xs btn-warning"><span class="fa fa-eye"></span></a>&nbsp;&nbsp; -->
                         <a href="<?php echo base_url('ledger/edit/'); ?><?php echo $id; ?>" title="Edit" class="btn btn-xs btn-info"><span class="glyphicon glyphicon-edit"></span></a>&nbsp;&nbsp;
@@ -76,8 +76,8 @@ $this->load->view('layout/header');
                   <th>Ledger Name</th>
                   <th>Group</th>
                   <th>Opening Balance</th>
-                  <th>Opening Date</th>
-                  <th>End Date</th>
+                  <!-- <th>Opening Date</th>
+                  <th>End Date</th> -->
                   <th>Closing Balance</th>
                   <th>Actions</th>
                 </tr>

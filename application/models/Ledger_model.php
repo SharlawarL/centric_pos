@@ -20,16 +20,6 @@ class Ledger_model extends CI_Model
                         ->get()
                         ->result(); 
     }
-    public function getReport($id){
-        return $this->db->select('i.sales_amount as invoice_amount,i.paid_amount as paid_amount,
-        i.invoice_no as invoice_no,i.invoice_date,c.first_name as cname')
-        ->from('invoice i')
-        ->join('sales s','s.sales_id=i.sales_id')
-        ->join('users c','c.id=s.customer_id')
-        ->where('c.id',$id)
-        ->get()
-        ->result();
-    }
 	public function getPurchase(){
 		$this->db->select('purchases.*,suppliers.*')
 				 ->from('purchases')
@@ -288,5 +278,82 @@ class Ledger_model extends CI_Model
             
         return FALSE;
     }
+    public function getReport($id){
+        return $this->db->select('i.sales_amount as invoice_amount,i.paid_amount as paid_amount,
+        i.invoice_no as invoice_no,i.invoice_date,c.first_name as cname')
+        ->from('invoice i')
+        ->join('sales s','s.sales_id=i.sales_id')
+        ->join('users c','c.id=s.customer_id')
+        ->get()
+        ->result();
+    }
+	public function getStatementData($year,$id){
+		return $this->db->select('i.sales_amount as invoice_amount,i.paid_amount as paid_amount,
+        i.invoice_no as invoice_no,i.invoice_date,c.first_name as cname')
+						->from('invoice i')
+						->join('sales s','s.sales_id=i.sales_id')
+						->join('users c','c.id=s.customer_id')
+						->where('YEAR(s.date)',$year)
+                        ->where('s.delete_status',0)
+                        ->get()
+                        ->result();
+                    }
+	public function getInvoiceData($year,$id){
+		$query = $this->db->select('i.sales_id,i.invoice_no,i.invoice_date,i.sales_amount,s.delete_status,s.delete_date')
+						->from('invoice i')
+						->join('sales s','s.sales_id=i.sales_id')
+						->join('users c','c.id=s.customer_id')
+						->where('YEAR(s.date)',$id);
+
+			if ($id) {
+				$query = $query->where('c.id',$id);
+			}
+
+		return $query->get()->result();
+	}
+	public function getInvoiceDeleteData($year,$id){
+		$query = $this->db->select('i.sales_id,i.invoice_no,i.invoice_date,i.sales_amount,s.delete_status,s.delete_date')
+						->from('invoice i')
+						->join('sales s','s.sales_id=i.sales_id')
+						->join('users c','c.id=s.customer_id')
+						->where('YEAR(s.date)',$year)
+						->where('s.delete_status',1);
+
+			if ($id) {
+				$query = $query->where('c.id',$id);
+			}
+
+		return $query->get()->result();
+	}
+	public function getPaymentData($year,$id){
+		$query = $this->db->select('i.sales_id,i.invoice_no,th.voucher_no,th.amount,th.voucher_date')
+						->from('invoice i')
+						->join('sales s','s.sales_id=i.sales_id')
+						->join('users c','c.id=s.customer_id')
+						->join('transaction_header th','th.invoice_id = i.id')
+						->where('YEAR(s.date)',$year);
+
+			if ($id) {
+				$query = $query->where('c.id',$id);
+			}
+
+		return $query->get()->result();
+	}
+	public function getCreditNoteData($year,$id){
+		$query = $this->db->select('i.sales_id,i.invoice_no,th.voucher_no,th.amount,th.voucher_date')
+						->from('credit_debit_note cdn')
+						->join('transaction_header th','cdn.id = th.credit_debit_note_id')
+						->join('invoice i','cdn.invoice_id = i.id')
+						->join('sales s','s.sales_id=i.sales_id')
+						->join('users c','c.id=s.customer_id')
+						->where('YEAR(s.date)',$year);
+
+			if ($id) {
+				$query = $query->where('c.id',$id);
+			}
+
+		return $query->get()->result();
+	}
+
 }
 ?>

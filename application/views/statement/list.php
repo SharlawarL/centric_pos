@@ -59,6 +59,25 @@ $this->load->view('layout/header');
                         <?php endforeach ?>
                       </select>
                     </div>
+                    
+                    <div class="form-group col-md-3">
+                      <select class="select2 form-control" name="warehouse" id="warehouse">
+                          <option>Select Warehouse</option>
+                        <?php foreach ($warehouses as $row): ?>
+                          <option value="<?php echo $row->id; ?>" 
+                                <?php 
+                                  if(isset($warehouse))  
+                                  {
+                                    if($warehouse == $row->id)
+                                    {
+                                      echo ' selected';
+                                    }
+                                  }
+
+                                ?>><?php echo $row->warehouse_name; ?></option>
+                        <?php endforeach ?>
+                      </select>
+                    </div>
                     <div class="col-md-3">
                       <input type="submit" name="submit" class="btn btn-info btn-flat" value="Submit">
                     </div>

@@ -5,6 +5,7 @@ class Ledger extends MY_Controller
     function __construct() {
         parent::__construct();
         $this->load->model('ledger_model');
+        $this->load->model('customer_model');
         $this->load->model('branch_model');
         $this->load->model('warehouse_model');
         $this->load->model('user_model');
@@ -38,23 +39,7 @@ class Ledger extends MY_Controller
             $this->load->view('ledger/list',$data);    
         }
     }
-
-    public function report(){
-        if(!$this->user_model->has_permission("report_ledger"))
-        {
-            $this->load->view('layout/restricted'); 
-        }
-        else
-        {
-            $user_id = $this->session->userdata('user_id');
-            $data['data'] = $this->ledger_model->getReport($user_id); 
-            $this->load->view('ledger/report',$data);    
-        }
-    }
-
-
      
-    
     public function getBranch(){
         //get Branch name and Id
         $data['data'] = $this->biller_model->getBranch(); 
@@ -189,5 +174,52 @@ class Ledger extends MY_Controller
     }
 
 
+    public function report(){
+        if(!$this->user_model->has_permission("report_ledger"))
+        {
+            $this->load->view('layout/restricted'); 
+        }
+        else
+        {
+            $user_id = $this->session->userdata('user_id');
+            $data['data'] = $this->ledger_model->getReport($user_id); 
+            $this->load->view('ledger/report',$data);    
+        }
+    }
+
+
+
+	public function getStatements()
+	{
+		$this->form_validation->set_rules('year','Year','trim|required|numeric');
+//		$this->form_validation->set_rules('customer','Customer','trim|required|numeric');
+//		$this->form_validation->set_rules('warehouse','Warehouse','trim|required|numeric');
+		if($this->form_validation->run()==FALSE){
+			$this->index();
+		}
+		else{
+			$year = $this->input->post('year');
+			$customer = $this->input->post('customer');
+			$data['year'] = $year;
+			$data['data'] = $this->ledger_model->getStatementData($year,$customer);
+			$data['invoice_data'] = $this->ledger_model->getInvoiceData($year,$customer);
+			$data['invoice_delete_data'] = $this->ledger_model->getInvoiceDeleteData($year,$customer);
+			/*echo "<pre>";
+			print_r($data['data']);
+			exit;*/
+			$data['payment_data'] = $this->ledger_model->getPaymentData($year,$customer);
+			$data['credit_note'] = $this->ledger_model->getCreditNoteData($year,$customer);
+			$data['customers'] = $this->user_model->get_user_records_by_role('customer');
+			$data['warehouses'] = $this->purchase_model->getPurchaserWarehouse();
+			$data['customer_data'] = $this->customer_model->getCustomerData($customer);
+			$data['company'] = $this->purchase_model->getCompany();
+			$data['customer'] = $customer;
+			/*echo "<pre>";
+			print_r($data['credit_note']);
+			exit;*/
+            var_dump(json_encode($this->input->post()));
+			$this->load->view('ledger/report',$data);
+		}
+	} 
+
 }
-?>

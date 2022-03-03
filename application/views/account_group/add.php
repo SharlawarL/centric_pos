@@ -86,9 +86,7 @@ $this->load->view('layout/header');
                         <span class="validation-color" id="err_category"><?php echo form_error('category'); ?></span>
                       </div>
                       <div class="form-group">
-                        <label   for="opening_balance">Opening Balance Amount</label>
-                        <input type="text" class="form-control" placeholder="Opening Balance Amount" id="opening_balance" name="opening_balance" value="<?php if(isset($account_group)){ echo $account_group->opening_balance;} else {echo set_value('opening_balance');} ?>">
-                        <span class="validation-color" id="err_opening_balance"><?php echo form_error('opening_balance'); ?></span>
+                        <input type="hidden" class="form-control" placeholder="Opening Balance Amount" id="opening_balance" name="opening_balance" value="<?php if(isset($account_group)){ echo $account_group->opening_balance;} else {echo set_value('opening_balance');} ?>">
                       </div>
                     </div>
                     <div class="panel-body">

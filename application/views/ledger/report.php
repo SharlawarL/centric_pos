@@ -30,6 +30,22 @@ $this->load->view('layout/header');
               <h3 class="box-title">Ledger Report</h3>
             </div>
             <!-- /.box-header -->
+                        <!-- /.box-header -->
+                        <div class="box-body">
+              <div class="row">
+                <div class="col-md-12">
+                  <form method="post" action="<?php echo base_url('ledger/getStatements'); ?>">
+                    <div class="form-group col-md-3">
+                      <select class="select2 form-control" name="year">
+                        <?php for($i=date('Y');$i>=2015;$i--){
+                          echo "<option value='$i'>$i</option>";
+                        }?>
+                      </select>
+                    </div>
+                    <div class="col-md-3">
+                      <input type="submit" name="submit" class="btn btn-info btn-flat" value="Submit">
+                    </div>
+
                       <button type="submit" class="btn btn-sm pull-right" onclick="printDiv('print_statement')" style="margin-right: 10px;">
                         <i class="fa fa-print"></i>
                       </button>
